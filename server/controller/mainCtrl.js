@@ -1,48 +1,49 @@
+const examDb = require('../schemas/examSchema')
+
+const getAll = async () => {
+    return examDb.find()
+}
+
 module.exports = {
-
-    getUser: async (req, res) => {
-        let {id} = req.params
-        const user = posts.filter( x => x.userId === Number(id))
-        res.send(user)
+    upload: async (req, res) => {
+        const {name, age, email, password} = req.body
+        const data = new examDb()
+        data.name = name
+        data.age = age
+        data.email = email
+        data.password = password
+        await data.save()
+        const users = await getAll()
+        res.send({users})
+        // res.send(examDb.find())
     },
-    getPost: async (req, res) => {
-        let {id} = req.params
-        const post = posts.filter( x => x.userId === Number(id))
-        res.send(post)
+    update: async (req, res) => {
+        let {id, name, age, email, password} = req.body
+        await examDb.findOneAndUpdate(
+            {_id: id},
+            {
+                name: name,
+                age: age,
+                email: email,
+                password: password,
+        })
+        const users = await getAll()
+        res.send({users})
     },
-
-    getLength: async (req, res) => {
-        let len = posts.reduce((acc, current) => {
-            return acc + current.title.length
-        }, 0)
-        res.send({length: len})
+    find: async (req, res) => {
+        const {id} = req.params
+        const entry = await examDb.findById(id)
+        // console.log(entry)
+        res.send(entry)
     },
-
-    postKey: async (req, res) => {
-        // const body = JSON.parse(req.body)
-        // console.log(req.body)
-        const {name, value, id} = req.body
-        posts[id][name] = value
-        const post = posts[id]
-        res.send(post)
+    delete: async (req, res) => {
+        const {id} = req.params
+        await examDb.findOneAndDelete({_id: id})
+        const users = await getAll()
+        res.send({users})
     },
-
-    addText: async (req, res) => {
-        const {text, id} = req.body
-        posts[id].title += text
-        const post = posts[id]
-        // console.log(posts[id])
-        res.send(post)
-    },
-
-    validateThis: async (req, res) => {
-        const {email} = req.body
-        res.send({success: true, message: `Your email is: ${email}`})
-    },
-    getget: async (req, res) => {
-        console.log(req)
-        let asd = {ress: "asd"}
-        res.send(asd)
+    all: async (req, res) => {
+        const users = await getAll()
+        res.send({users})
     }
-
 }

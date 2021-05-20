@@ -1,4 +1,4 @@
-const validate = (req, res, next) => {
+const validator = (req, res, next) => {
     let errmsg = []
 
     const {email, string} = req.body
@@ -31,4 +31,4 @@ const validate = (req, res, next) => {
 
     next()
 }
-module.exports = validate
+module.exports = validator
