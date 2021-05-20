@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useLocation, Link} from 'react-router-dom'
 import Fetch from "../plugins/Fetch";
-import DisplayUser from "./DisplayUser";
-import App from "../App";
 
 function EditUser({set}) {
     const location = useLocation().pathname
@@ -24,7 +22,6 @@ function EditUser({set}) {
                 setPassword(res.data.password)
                 })
     }, [])
-
 
     const updateUser = () => {
         const data = {

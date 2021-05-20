@@ -11,6 +11,4 @@ router.get('/all', mainCtrl.all)
 router.get('/find/:id', mainCtrl.find)
 router.get('/delete/:id', mainCtrl.delete)
 
-
-
 module.exports = router
