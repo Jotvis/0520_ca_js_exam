@@ -9,8 +9,13 @@ function DisplayUser({user, set}) {
     const deleteUser = () => {
         Fetch.get(`/delete/${user._id}`)
             .then(res => {
-                console.log(res.users)
-                set(res.users)
+                console.log(res.data)
+                // set(res.data)
+                if (res.success === true) {
+                    set(res.data)
+                } else {
+
+                }
             })
     }
 

@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useLocation, Link} from 'react-router-dom'
 import Fetch from "../plugins/Fetch";
+import DisplayUser from "./DisplayUser";
+import App from "../App";
 
 function EditUser({set}) {
     const location = useLocation().pathname
@@ -15,10 +17,10 @@ function EditUser({set}) {
     useEffect( () => {
         Fetch.get(`/find/${id}`)
             .then( res => {
-                setName(res.name)
-                setAge(res.age)
-                setEmail(res.email)
-                setPassword(res.password)
+                setName(res.data.name)
+                setAge(res.data.age)
+                setEmail(res.data.email)
+                setPassword(res.data.password)
                 })
     }, [])
 
@@ -35,7 +37,14 @@ function EditUser({set}) {
         Fetch.post(`/update`, data)
             .then(res => {
                 console.log(res)
-                set(res.users)
+                if (res.success === true) {
+                    set(res.data)
+                    return(
+                        <App/>
+                    )
+                } else {
+
+                }
             })
     }
 
@@ -49,7 +58,9 @@ function EditUser({set}) {
                 <input type="text" placeholder='El. paštas' value={email} onChange={(e) => setEmail(e.target.value)}/>
                 <input type="text" placeholder='Slaptažodis' value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <button onClick={updateUser}>
-                    <Link to='/'>Atnaujinti vartotoją</Link>
+                    {/*<Link to='/'>*/}
+                        Atnaujinti vartotoją
+                    {/*</Link>*/}
                 </button>
             </div>
         </>

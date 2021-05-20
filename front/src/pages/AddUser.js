@@ -19,7 +19,12 @@ function AddUser({set}) {
 
         Fetch.post('/addUser', data)
             .then(res => {
-                set(res.users)
+                console.log(res)
+                if (res.success === true) {
+                    set(res.data)
+                } else {
+
+                }
             })
             .catch( (error) => console.error(error))
     }

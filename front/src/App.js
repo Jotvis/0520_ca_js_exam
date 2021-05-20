@@ -17,8 +17,12 @@ function App() {
     useEffect(() => {
        Fetch.get('/all')
             .then(res=> {
-                console.log(res.users)
-                setUsers(res.users)
+                console.log(res.data)
+                if (res.success === true) {
+                    setUsers(res.data)
+                } else {
+
+                }
             })
     }, [])
 

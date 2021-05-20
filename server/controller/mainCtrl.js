@@ -14,8 +14,7 @@ module.exports = {
         data.password = password
         await data.save()
         const users = await getAll()
-        res.send({users})
-        // res.send(examDb.find())
+        res.send({success: true, data: users})
     },
     update: async (req, res) => {
         let {id, name, age, email, password} = req.body
@@ -28,22 +27,22 @@ module.exports = {
                 password: password,
         })
         const users = await getAll()
-        res.send({users})
+        res.send({success: true, data: users})
     },
     find: async (req, res) => {
         const {id} = req.params
         const entry = await examDb.findById(id)
         // console.log(entry)
-        res.send(entry)
+        res.send({success: true, data: entry})
     },
     delete: async (req, res) => {
         const {id} = req.params
         await examDb.findOneAndDelete({_id: id})
         const users = await getAll()
-        res.send({users})
+        res.send({success: true, data: users})
     },
     all: async (req, res) => {
         const users = await getAll()
-        res.send({users})
+        res.send({success: true, data: users})
     }
 }

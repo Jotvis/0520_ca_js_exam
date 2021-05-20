@@ -1,7 +1,13 @@
 const validator = (req, res, next) => {
     let errmsg = []
 
-    const {email, string} = req.body
+    const {name, age, email, password} = req.body
+    for (let letter of name) {
+        if (Number(letter) == letter) {
+            errmsg.push('Number in name')
+        }
+    }
+
     if (
         email.length < 3 ||
         email.length > 100 ||
@@ -11,19 +17,23 @@ const validator = (req, res, next) => {
         errmsg.push("Invalid email")
     }
 
-    let counter = 0
+    if (age.typeof !== Number) {
+        errmsg.push('Age not a number')
+    }
+
+    let pwCounter = 0
     let num = false
-    for (let letter of string) {
+    for (let letter of password) {
         if (letter === letter.toUpperCase()) {
             console.log(letter)
-            counter ++
+            pwCounter ++
         }
         if (Number(letter) == letter) {
             num = true
         }
     }
     if (counter < 3 || !num) {
-        errmsg.push("Invalid string")
+        errmsg.push("Invalid password. Min 3 uppercase and 1 number")
     }
     if (errmsg.length > 0) {
         return res.send({success: false, error: errmsg})
