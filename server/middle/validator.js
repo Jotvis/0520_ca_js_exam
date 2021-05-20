@@ -16,7 +16,6 @@ const validator = (req, res, next) => {
     ) {
         errmsg.push("Invalid email")
     }
-
     // if (typeof age != 'number') {
     //     errmsg.push('Age not a number')
     // }
