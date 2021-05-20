@@ -17,9 +17,9 @@ const validator = (req, res, next) => {
         errmsg.push("Invalid email")
     }
 
-    if (age.typeof !== Number) {
-        errmsg.push('Age not a number')
-    }
+    // if (typeof age != 'number') {
+    //     errmsg.push('Age not a number')
+    // }
 
     let pwCounter = 0
     let num = false
@@ -32,7 +32,7 @@ const validator = (req, res, next) => {
             num = true
         }
     }
-    if (counter < 3 || !num) {
+    if (pwCounter < 3 || !num) {
         errmsg.push("Invalid password. Min 3 uppercase and 1 number")
     }
     if (errmsg.length > 0) {

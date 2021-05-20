@@ -8,6 +8,7 @@ function EditUser({set}) {
     const location = useLocation().pathname
     const id = location.slice(10)
     // const [user, setUser] = useState('')
+    const [error, setError] = useState([])
 
     const [name, setName] = useState('')
     const [age, setAge] = useState('')
@@ -39,11 +40,8 @@ function EditUser({set}) {
                 console.log(res)
                 if (res.success === true) {
                     set(res.data)
-                    return(
-                        <App/>
-                    )
                 } else {
-
+                    setError(res.error)
                 }
             })
     }
@@ -62,6 +60,11 @@ function EditUser({set}) {
                         Atnaujinti vartotoją
                     {/*</Link>*/}
                 </button>
+                <div>{error.map(err => {
+                    return (
+                        <div>{err}</div>
+                    )
+                })}</div>
             </div>
         </>
     )

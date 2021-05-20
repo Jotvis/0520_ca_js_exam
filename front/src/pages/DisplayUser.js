@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Fetch from "../plugins/Fetch";
 import {Link} from 'react-router-dom'
 
 
 function DisplayUser({user, set}) {
     const id = user._id
+    const [error, setError] = useState([])
+
 
     const deleteUser = () => {
         Fetch.get(`/delete/${user._id}`)
@@ -14,7 +16,7 @@ function DisplayUser({user, set}) {
                 if (res.success === true) {
                     set(res.data)
                 } else {
-
+                    setError(res.error)
                 }
             })
     }
@@ -29,6 +31,10 @@ function DisplayUser({user, set}) {
                 <Link to={`/editUser/${id}`}>Redaguoti</Link>
             </button>
             <button onClick={deleteUser}>Trinti</button>
+
+            <div>{error.map(err => {
+                return(<div>{err}</div>)
+            })}</div>
         </li>
     )
 }

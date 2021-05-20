@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useRef as ref} from "react";
 import Fetch from "../plugins/Fetch";
 import {Link} from "react-router-dom";
@@ -8,6 +8,7 @@ function AddUser({set}) {
     const age = ref()
     const email = ref()
     const password = ref()
+    const [error, setError] = useState([])
 
     const createUser = () => {
         const data = {
@@ -23,7 +24,7 @@ function AddUser({set}) {
                 if (res.success === true) {
                     set(res.data)
                 } else {
-
+                    setError(res.error)
                 }
             })
             .catch( (error) => console.error(error))
@@ -38,8 +39,16 @@ function AddUser({set}) {
                 <input ref={email} type="text" placeholder='El. paštas'/>
                 <input ref={password} type="password" placeholder='Slaptažodis'/>
                 <button onClick={createUser}>
-                    <Link to='/'>Sukurti vartotoją</Link>
+                    {/*<Link to='/'>*/}
+                        Sukurti vartotoją
+                    {/*</Link>*/}
                 </button>
+
+                <div>{error.map(err => {
+                    return (
+                        <div>{err}</div>
+                    )
+                })}</div>
             </div>
         </>
     );
